@@ -1,11 +1,22 @@
 from doubly_linked_list import DoublyLinkedList
 
-dll = DoublyLinkedList(4)
+dll = DoublyLinkedList(10)
 
 dll.insert_at_front(1)
+print(dll)
 dll.insert_at_front(2)
+print(dll)
 dll.insert_at_front(3)
-
+print(dll)
+dll.insert_at_back(5)
+print(dll)
+dll.insert_at_back(9)
+print(dll)
+dll.insert_at(10, 5)
+print(dll)
+dll.insert_at(20,3)
+print(dll)
+dll.insert_at(22,6)
 print(dll)
 print(f"Head is  {dll.check_head()}")
 print(f"Tail is  {dll.check_tail()}")
