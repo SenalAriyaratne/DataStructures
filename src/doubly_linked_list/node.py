@@ -1,5 +1,12 @@
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 class Node:
     def __init__(self, data: any):
+        self._logger = logger
+        if data is None:
+            raise ValueError("Node data cannot be None")    
         self._data = data
         self._nxt = None
         self._prev = None
@@ -8,6 +15,9 @@ class Node:
         return self._data
     
     def set_data(self, new_value: any):
+        if new_value is None:
+            self._logger.error("Node data cannot be set to None")
+            return
         self._data = new_value
     
     def set_node(self, node: 'Node', node_type: str):
