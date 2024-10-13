@@ -35,6 +35,7 @@ class DoublyLinkedList:
                 self._logger.error("Not enough space")
     
     def insert_at(self, data:any, pos:any):
+
         # check if pos is closer to head or tail
         if pos >= self._size or pos > self._count:
             self._logger.error(f"Invalid postion")
@@ -73,13 +74,87 @@ class DoublyLinkedList:
                 else:
                     idx += 1
                     current = current.get_next()
- 
+    
+    def delete_at_front(self):
+        if self._is_empty():
+            self._logger.warning("Empty list, nothing to remove")
+            return
+        old_head = self._head
+        self._head = old_head.get_next()
+        self._head.set_node(None, "prev")
+        self._count -= 1
+        self._logger.info(f"Successfully removed {old_head}, new head of the list is {self._head}")
+
+    def delete_at_back(self):
+        if self._is_empty():
+            self._logger.warning("Empty list, nothing to remove")
+            return
+        old_tail = self._tail
+        self._tail = old_tail.get_previous()
+        self._tail.set_node(None, "nxt")
+        self._count -= 1
+        self._logger.info(f"Successfully removed{old_tail}, new tail of the list is {self._tail}")
+
+    def delete_at(self, pos:int):
+        if self._is_empty():
+            self._logger.warning("Empty list, nothing to remove")
+            return
+        if pos >= self._size or pos > self._count:
+            self._logger.error(f"Invalid postion")
+            return
+        if pos == 0:
+            self.delete_at_front()
+            return
+        if pos == self._count:
+            self.delete_at_back()
+            return
+
+        mid = int(self._count / 2)
+
+        if pos > mid:
+            idx = self._count - 1
+            current = self._tail
+
+            while current:
+                if idx == pos -1:
+                    current_prev = current.get_previous()
+                    current_nxt = current.get_next()
+                    current_prev.set_node(current_nxt, "nxt")
+                    current_nxt.set_node(current_prev, "prev")
+                    self._count -= 1
+                    self._logger.info(f"Successfully removed the node {current}")
+                    break
+                else:
+                    idx -= 1
+                    current = current.get_previous()
+        else:
+            idx = 0
+            current = self._head
+            while current:
+                if idx == pos - 1:
+                    current_prev = current.get_previous()
+                    current_nxt = current.get_next()
+                    current_prev.set_node(current_nxt, "nxt")
+                    current_nxt.set_node(current_prev, "prev")
+                    self._count -= 1
+                    self._logger.info(f"Successfully removed the node {current}")
+                    break
+                else:
+                    idx += 1
+                    current = current.get_next()
+
+    
+        
+
     def check_head(self):
         return self._head.get_data()
     
     def check_tail(self):
         return self._tail.get_data()
 
+    def _is_empty(self):
+        return self._count == 0
+    
     def _add_first_element(self, new_node: Node):
         self._head = new_node
         self._tail = new_node
@@ -119,7 +194,6 @@ class DoublyLinkedList:
     def _has_space(self) -> bool:
         return self._count < self._size
     
-   
     def __str__(self):
         values = []
         current = self._head
