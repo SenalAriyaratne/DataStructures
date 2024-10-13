@@ -1,10 +1,16 @@
 from node import Node
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 class DoublyLinkedList:
     def __init__(self, size: int):
         self._size = size
         self._count = 0
         self._head = None
         self._tail = None
+        self._logger = logger
 
     def insert_at_front(self, data: any):
         new_node = Node(data)
@@ -12,6 +18,7 @@ class DoublyLinkedList:
             self._head = new_node
             self._tail = new_node
             self._count += 1
+            self._logger.info(f"Added new element, the current head is {self._head}")
         else:
             if self._has_space:
                 self._set_head(new_node)
@@ -23,6 +30,7 @@ class DoublyLinkedList:
             print(f"List is empty, Add an element at front")
             return
         else:
+            pass
             
 
     def insert_at(self, data:any, pos:any):
