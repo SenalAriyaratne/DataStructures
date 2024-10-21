@@ -132,8 +132,6 @@ class DoublyLinkedList:
                 else:
                     idx += 1
                     current = current.get_next()
-    
-    
 
     def _link_after_remove(self, current):
         current_prev = current.get_previous()
