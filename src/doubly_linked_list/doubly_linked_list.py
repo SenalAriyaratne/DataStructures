@@ -117,12 +117,7 @@ class DoublyLinkedList:
 
             while current:
                 if idx == pos -1:
-                    current_prev = current.get_previous()
-                    current_nxt = current.get_next()
-                    current_prev.set_node(current_nxt, "nxt")
-                    current_nxt.set_node(current_prev, "prev")
-                    self._count -= 1
-                    self._logger.info(f"Successfully removed the node {current}")
+                    self._link_after_remove(current)
                     break
                 else:
                     idx -= 1
@@ -132,19 +127,19 @@ class DoublyLinkedList:
             current = self._head
             while current:
                 if idx == pos - 1:
-                    current_prev = current.get_previous()
-                    current_nxt = current.get_next()
-                    current_prev.set_node(current_nxt, "nxt")
-                    current_nxt.set_node(current_prev, "prev")
-                    self._count -= 1
-                    self._logger.info(f"Successfully removed the node {current}")
+                    self._link_after_remove(current=current)
                     break
                 else:
                     idx += 1
                     current = current.get_next()
 
-    
-        
+    def _link_after_remove(self, current):
+        current_prev = current.get_previous()
+        current_nxt = current.get_next()
+        current_prev.set_node(current_nxt, "nxt")
+        current_nxt.set_node(current_prev, "prev")
+        self._count -= 1
+        self._logger.info(f"Successfully removed the node {current}")
 
     def check_head(self):
         return self._head.get_data()
